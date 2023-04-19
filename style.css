@@ -1,0 +1,30 @@
+body {
+  font-family: sans-serif;
+}
+
+#add-task-form {
+  margin-bottom: 1em;
+}
+
+#task-input {
+  padding: 0.5em;
+  width: 70%;
+}
+
+#task-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.task-item {
+  margin-bottom: 0.5em;
+}
+
+.complete-button,
+.delete-button {
+  margin-left: 0.5em;
+}
+
+.completed {
+  text-decoration: line-through;
+}
