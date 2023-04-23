@@ -8,17 +8,65 @@ const taskList = document.querySelector('#task-list');
 const remainingTasks = document.querySelector('#remaining-tasks');
 let tasks = [];
 
+const BASE_URL = "http://localhost:3000"
+
+// Fetch tasks from the API and render them
+async function fetchTasks() {
+  const response = await fetch(`${BASE_URL}/tasks`);
+  const data = await response.json();
+  tasks = data;
+  renderTasks();
+}
+
+// Add a new task using the API
+async function addTask(task) {
+  const response = await fetch(`${BASE_URL}/tasks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(task)
+  });
+  const data = await response.json();
+  tasks.push(data);
+  renderTasks();
+}
+
+// Update an existing task using the API
+async function updateTask(id, updates) {
+  const response = await fetch(`${BASE_URL}/tasks/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates)
+  });
+  const data = await response.json();
+  tasks = tasks.map(task => {
+    if (task.id === id) {
+      return data;
+    } else {
+      return task;
+    }
+  });
+  renderTasks();
+}
+
+// Delete a task using the API
+async function deleteTask(id) {
+  const response = await fetch(`${BASE_URL}/tasks/${id}`, { method: 'DELETE' });
+  const data = await response.json();
+  tasks = tasks.filter(task => task.id !== id);
+  renderTasks();
+}
+
 addTaskForm.addEventListener('submit', event => {
   event.preventDefault();
   const taskDescription = taskInput.value;
   if (taskDescription) {
     const task = {
+      name: taskDescription,
       description: taskDescription,
       completed: false
     };
-    tasks.push(task);
+    addTask(task);
     taskInput.value = '';
-    renderTasks();
   }
 });
 
@@ -39,13 +87,14 @@ searchForm.addEventListener('submit', e => {
 taskList.addEventListener('click', event => {
   if (event.target.classList.contains('complete-button')) {
     const taskIndex = event.target.parentElement.dataset.index;
-    tasks[taskIndex].completed = !tasks[taskIndex].completed;
-    renderTasks();
+    const task = tasks[taskIndex];
+    const updates = { completed: !task.completed };
+    updateTask(task.id, updates);
   }
   if (event.target.classList.contains('delete-button')) {
     const taskIndex = event.target.parentElement.dataset.index;
-    tasks.splice(taskIndex, 1);
-    renderTasks();
+    const task = tasks[taskIndex];
+    deleteTask(task.id);
   }
 });
 
