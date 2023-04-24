@@ -4,12 +4,7 @@ services:
     image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      # MYSQL_ROOT_PASSWORD: changeme
-      # MYSQL_DATABASE: db
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
-      MYSQL_USER: adminer
-      MYSQL_PASSWORD: adminer
-      MYSQL_DATABASE: adminer
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - 3306:3306
     volumes:
@@ -17,16 +12,9 @@ services:
   adminer_container:
     image: adminer:latest
     environment:
-      ADMINER_DEFAULT_DB_DRIVER: mysql
-      ADMINER_DEFAULT_DB_HOST: mysql_db_container
-      ADMINER_DEFAULT_DB_NAME: adminer
-      ADMINER_DESIGN: nette
-      ADMINER_PLUGINS: tables-filter tinymce
       ADMINER_DEFAULT_SERVER: mysql_db_container
     ports:
       - 8080:8080
-    depends_on: 
-      - mysql_db_container
 
 volumes:
   mysql_db_data_container:
