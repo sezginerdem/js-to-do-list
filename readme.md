@@ -1,5 +1,25 @@
 # define the data model for basic, simple To-Do List application and desig the MySQL database schema for me
 
+Run command in the same folder docker-compose.yaml
+```bash
+docker-compose up -d
+```
+
+Go to http://localhost:8080
+## MySQL credential
+Username: root
+Password: rootpassword
+
+To shutdown database without remove the container.
+```bash
+docker-compose stop
+```
+
+To shutdown database and remove the container.
+```bash 
+docker-compose down
+```
+
 A basic To-Do List application can be designed using a simple data model that consists of two tables: one for tasks and one for users. The tasks table should have columns for task ID, task name, task description, due date, and status (completed or not). The users table should have columns for user ID, username, email address, and password.
 
 To create a MySQL database with tables for your To-Do List application, you can follow these general steps:
@@ -165,3 +185,4 @@ http-server -p 5500
 Access the development server: Open your web browser and navigate to http://localhost:5500/. You should see your index.html file served by the development server.
 
 
+#
