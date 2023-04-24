@@ -2,6 +2,7 @@
 
 Run command in the same folder docker-compose.yaml
 ```bash
+cd db
 docker-compose up -d
 ```
 
